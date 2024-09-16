@@ -1,10 +1,13 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { useSearchParams } from 'next/navigation';
 import Image from "next/image";
 
 export default function Home() {
-  const [count, setCount] = useState(5);
+  const searchParams = useSearchParams();
+  const initialCount = parseInt(searchParams.get('count') || '5', 10);
+  const [count, setCount] = useState(initialCount);
   const [message, setMessage] = useState('');
 
   useEffect(() => {
@@ -27,6 +30,7 @@ export default function Home() {
         </button>
         <p>Count: {count}</p>
         {message && <p className="text-green-600">{message}</p>}
+        <p>Initial count from URL: {initialCount}</p>
       </div>
     </main>
   );
