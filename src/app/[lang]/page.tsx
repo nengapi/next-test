@@ -1,11 +1,12 @@
 'use client';
 
 import { useState, useEffect, Suspense } from 'react';
-import { useSearchParams } from 'next/navigation';
+import { useSearchParams, useParams } from 'next/navigation';
 import Image from "next/image";
 
 function HomeContent() {
   const searchParams = useSearchParams();
+  const { lang } = useParams();
   const initialCount = parseInt(searchParams.get('count') || '5', 10);
   const [count, setCount] = useState(initialCount);
   const [message, setMessage] = useState('');
@@ -27,15 +28,18 @@ function HomeContent() {
       <p>Count: {count}</p>
       {message && <p className="text-green-600">{message}</p>}
       <p>Initial count from URL: {initialCount}</p>
+      <p>Current language: {lang}</p>
     </div>
   );
 }
 
 export default function Home() {
+  const { lang } = useParams();
   return (
     <main className="flex min-h-screen flex-col items-center justify-center p-24">
       <h1 className="text-4xl font-bold mb-8">Welcome to My Next.js App</h1>
       <p className="mb-4">This is a client-side component example with useEffect.</p>
+      <p className="mb-4">Current language: {lang}</p>
       <Suspense fallback={<p>Loading...</p>}>
         <HomeContent />
       </Suspense>
